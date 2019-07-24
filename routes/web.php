@@ -28,3 +28,7 @@ Route::get('/user/{user}/edit', 'UserController@edit');
 Route::put('/user/{user}', 'UserController@update');
 // 删除用户
 Route::get('/user/{user}/delete', 'UserController@delete');
+// 个人设置
+Route::get('/user/me/setting', 'UserController@setting');
+// 个人设置行为
+Route::post('/user/me/setting', 'UserController@settingStore');

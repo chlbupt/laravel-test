@@ -60,4 +60,35 @@ class UserController extends Controller
         $user->delete();
         return redirect(url('/user'));
     }
+    function setting()
+    {
+        $user = \Auth::user();
+        return view('user.setting', compact('user'));
+    }
+    function settingStore(Request $request)
+    {
+        $user = User::find(\Auth::id());
+        // 驗證
+        $this->validate($request, [
+            'name' => 'required|min:3',
+        ]);
+        // 邏輯
+        $name = request('name');
+        if($name != \Auth::user()->name)
+        {
+            if(User::where('name', $name)->count() > 0){
+                return back()->withErrors(['message' => '用户名称已经被注册']);
+            }
+        }
+        $user->name = $name;
+        if($request->file('avatar') ){
+            $avatar_path = env('AVATAR_PATH', '/uploads/avatar');
+            $path = $request->file('avatar')->store($avatar_path);
+//            dd($path);
+            $user->avatar = '/storage/'. $path;
+        }
+        // 渲染
+        $user->save();
+        return back();
+    }
 }

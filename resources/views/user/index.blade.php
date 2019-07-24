@@ -1,4 +1,9 @@
 @extends('layouts.main')
+
+@section('nav')
+    @include('layouts.nav')
+@endsection
+
 @section('content')
     <div class="main container">
         <form action="{{ url('/user') }}" method="GET" class="form-inline" role="form">

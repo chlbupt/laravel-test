@@ -36,10 +36,11 @@ function tabNavallwidth(){
 function Huiasidedisplay(){
 	if($(window).width()>=768){
 		$(".Hui-aside").show()
-	} 
+	}
 }
 function getskincookie(){
-	var v = getCookie("Huiskin");
+	// var v = getCookie("Huiskin");
+	var v;
 	var hrefStr=$("#skin").attr("href");
 	if(v==null||v==""){
 		v="default";
@@ -172,7 +173,7 @@ $(function(){
 			Huiasidedisplay();
 		},500);
 	});
-	
+
 	$(".nav-toggle").click(function(){
 		$(".Hui-aside").slideToggle();
 	});
@@ -182,13 +183,13 @@ $(function(){
 		}
 	});
 	/*左侧菜单*/
-	$.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");
+	// $.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");
 	/*选项卡导航*/
 
 	$(".Hui-aside").on("click",".menu_dropdown a",function(){
 		Hui_admin_tab(this);
 	});
-	
+
 	$(document).on("click","#min_title_list li",function(){
 		var bStopIndex=$(this).index();
 		var iframe_box=$("#iframe_box");
@@ -198,7 +199,7 @@ $(function(){
 	$(document).on("click","#min_title_list li i",function(){
 		var aCloseIndex=$(this).parents("li").index();
 		$(this).parent().remove();
-		$('#iframe_box').find('.show_iframe').eq(aCloseIndex).remove();	
+		$('#iframe_box').find('.show_iframe').eq(aCloseIndex).remove();
 		num==0?num=0:num--;
 		tabNavallwidth();
 	});
@@ -207,7 +208,7 @@ $(function(){
 		var iframe_box=$("#iframe_box");
 		if(aCloseIndex>0){
 			$(this).remove();
-			$('#iframe_box').find('.show_iframe').eq(aCloseIndex).remove();	
+			$('#iframe_box').find('.show_iframe').eq(aCloseIndex).remove();
 			num==0?num=0:num--;
 			$("#min_title_list li").removeClass("active").eq(aCloseIndex-1).addClass("active");
 			iframe_box.find(".show_iframe").hide().eq(aCloseIndex-1).show();
@@ -217,7 +218,7 @@ $(function(){
 		}
 	});
 	tabNavallwidth();
-	
+
 	$('#js-tabNav-next').click(function(){
 		num==oUl.find('li').length-1?num=oUl.find('li').length-1:num++;
 		toNavPos();
@@ -226,19 +227,19 @@ $(function(){
 		num==0?num=0:num--;
 		toNavPos();
 	});
-	
+
 	function toNavPos(){
 		oUl.stop().animate({'left':-num*100},100);
 	}
-	
+
 	/*换肤*/
 	$("#Hui-skin .dropDown-menu a").click(function(){
 		var v = $(this).attr("data-val");
 		setCookie("Huiskin", v);
 		var hrefStr=$("#skin").attr("href");
 		var hrefRes=hrefStr.substring(0,hrefStr.lastIndexOf('skin/'))+'skin/'+v+'/skin.css';
-		
+
 		$(window.frames.document).contents().find("#skin").attr("href",hrefRes);
 		//$("#skin").attr("href",hrefResd);
 	});
-}); 
+});
