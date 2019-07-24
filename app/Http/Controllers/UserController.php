@@ -15,6 +15,10 @@ class UserController extends Controller
         if($email){
             $user = $user->where('email', 'like', '%'.$email.'%');
         }
+        $name = request('name');
+        if($name){
+            $user = $user->where('name', 'like', '%'.$name.'%');
+        }
 //        DB::connection()->enableQueryLog();
         $users = $user->orderBy('id', 'desc')->paginate(10);
 //        dd(DB::getQueryLog());
@@ -71,22 +75,17 @@ class UserController extends Controller
         // 驗證
         $this->validate($request, [
             'name' => 'required|min:3',
+            'email' => 'required|email',
         ]);
         // 邏輯
         $name = request('name');
         if($name != \Auth::user()->name)
         {
-            if(User::where('name', $name)->count() > 0){
+            if( User::where('name', $name )->count() > 0){
                 return back()->withErrors(['message' => '用户名称已经被注册']);
             }
         }
         $user->name = $name;
-        if($request->file('avatar') ){
-            $avatar_path = env('AVATAR_PATH', '/uploads/avatar');
-            $path = $request->file('avatar')->store($avatar_path);
-//            dd($path);
-            $user->avatar = '/storage/'. $path;
-        }
         // 渲染
         $user->save();
         return back();

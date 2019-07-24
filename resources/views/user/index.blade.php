@@ -4,12 +4,15 @@
     @include('layouts.nav')
 @endsection
 
+<link href="{{ asset('css/user/home.css') }}" rel="stylesheet">
+
 @section('content')
     <div class="main container">
         <form action="{{ url('/user') }}" method="GET" class="form-inline" role="form">
             <div class="pull-right" style="margin-bottom: 10px; ">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Please input email" name="email" value="{{ get_params($_SERVER['QUERY_STRING'], 'email') }}">
+                    <input type="text" class="form-control" placeholder="Name" name="name" value="{{ get_params($_SERVER['QUERY_STRING'], 'name') }}">
+                    <input type="text" class="form-control" placeholder="Email" name="email" value="{{ get_params($_SERVER['QUERY_STRING'], 'email') }}">
                     <div class="btn-group form-hori">
                         <button type="submit" class="btn btn-primary">搜索</button>
                         <button type="button" class="btn btn-danger" onclick="reset_form('{{ url('/user') }}')">重置</button>
