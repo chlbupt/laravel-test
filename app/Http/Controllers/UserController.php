@@ -13,7 +13,7 @@ class UserController extends Controller
         $user = app('App\User');
         $email = request('email');
         if($email){
-            $user = $user->where('email', $email);
+            $user = $user->where('email', 'like', '%'.$email.'%');
         }
 //        DB::connection()->enableQueryLog();
         $users = $user->orderBy('id', 'desc')->paginate(10);

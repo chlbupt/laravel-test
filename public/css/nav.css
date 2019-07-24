@@ -1,0 +1,16 @@
+body{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+body > .main{
+    margin-top: 20px;
+}
+
+.shadow-sm{
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.bg-white {
+    background-color: #fff!important;
+}
