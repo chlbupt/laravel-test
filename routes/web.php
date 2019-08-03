@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,3 +34,20 @@ Route::get('/user/{user}/delete', 'UserController@delete');
 Route::get('/user/me/setting', 'UserController@setting');
 // 个人设置行为
 Route::post('/user/me/setting', 'UserController@settingStore');
+Route::get('/foo', function(){
+    $exitCode = \Illuminate\Support\Facades\Artisan::call('email:send chl --queue=default');
+});
+
+// 聊天室
+Route::get('/messages', function () {
+    return \App\Message::with('user')->get();
+})->middleware('auth');
+
+Route::post('/messages', function (\Illuminate\Http\Request $request) {
+    $message = $request->user()->message()->create($request->all());
+    $message->load('user');
+
+    broadcast(new \App\Events\PushMessageEvent($request->user(), $message))->toOthers();
+
+    return $message;
+})->middleware('auth');
