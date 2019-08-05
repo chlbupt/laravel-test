@@ -34,9 +34,8 @@ Route::get('/user/{user}/delete', 'UserController@delete');
 Route::get('/user/me/setting', 'UserController@setting');
 // 个人设置行为
 Route::post('/user/me/setting', 'UserController@settingStore');
-Route::get('/foo', function(){
-    $exitCode = \Illuminate\Support\Facades\Artisan::call('email:send chl --queue=default');
-});
+// Collect路由
+Route::get('/collect', 'CollectController@index');
 
 // 聊天室
 Route::get('/messages', function () {
