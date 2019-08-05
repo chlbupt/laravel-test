@@ -13,7 +13,18 @@
                         <a href="#" class="blog-nav-item dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ \Auth::user()->name }}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:;" onclick="layer_show('Show User', '/user/me/setting', '', 350)">个人设置</a></li>
-                            <li><a href="/logout">登出</a></li>
+                            {{--<li><a href="/logout">登出</a></li>--}}
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </li>
