@@ -64,6 +64,12 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+//        'ftp' => [
+//            'driver'   => 'ftp',
+//            'host'     => 'ftp.example.com',
+//            'username' => 'your-username',
+//            'password' => 'your-password',
+//        ]
     ],
 
 ];

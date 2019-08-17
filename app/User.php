@@ -40,4 +40,11 @@ class User extends Authenticatable
     public function message(){
         return $this->hasMany(Message::class, 'user_id', 'id');
     }
+
+    public function generateToken(){
+        $this->api_token = str_random(60);
+        $this->save();
+
+        return $this->api_token;
+    }
 }

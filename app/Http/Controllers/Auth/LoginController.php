@@ -7,6 +7,7 @@ use App\Events\LogoutEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -77,10 +78,20 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         event(new LogoutEvent($this->guard()->user(), \Request::getClientIp(), time(), 2));
-        $this->guard()->logout();
+        $user = Auth::guard('api')->user();
 
-        $request->session()->invalidate();
-
-        return redirect('/');
+        if($user)
+        {
+            $user->api_token = null;
+            $user->save();
+        }
+        return response()->json([
+            'data' => 'User logout.'
+        ], 200);
+//        $this->guard()->logout();
+//
+//        $request->session()->invalidate();
+//
+//        return redirect('/');
     }
 }

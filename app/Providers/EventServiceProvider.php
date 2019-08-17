@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\UserObserver;
+use App\User;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -35,7 +37,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        User::observe(UserObserver::class);
     }
 
     protected $subcribe = [

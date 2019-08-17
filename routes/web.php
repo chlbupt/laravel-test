@@ -50,3 +50,5 @@ Route::post('/messages', function (\Illuminate\Http\Request $request) {
 
     return $message;
 })->middleware('auth');
+
+Route::resource('/storages', 'StorageController', ['only' => ['index']]);
