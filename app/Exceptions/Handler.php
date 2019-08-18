@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Common\Err\ApiErrDesc;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Http\Response\ResponseJson;
 
 class Handler extends ExceptionHandler
 {
@@ -13,6 +15,9 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
+
+    use ResponseJson;
+
     protected $dontReport = [
         //
     ];
@@ -51,7 +56,14 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'error' => 'Resource not found.',
             ], 404);
+        }else if($exception instanceof ApiException){
+            $code = $exception->getCode();
+            $message = $exception->getMessage();
+        }else{
+            $code = $exception->getCode() ?: ApiErrDesc::ERR_UNKNOWN[0];
+            $message = $exception->getMessage() ?: ApiErrDesc::ERR_UNKNOWN[1];
         }
-        return parent::render($request, $exception);
+        return $this->jsonData($code, $message);
+//        return parent::render($request, $exception);
     }
 }

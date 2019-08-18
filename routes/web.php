@@ -27,7 +27,7 @@ Route::get('/user/create', 'UserController@create');
 Route::post('/user', 'UserController@store');
 // 编辑用户
 Route::get('/user/{user}/edit', 'UserController@edit');
-Route::put('/user/{user}', 'UserController@update');
+Route::put('/user/{user}', 'UserController@update')->where('user', '[0-9]+');
 // 删除用户
 Route::get('/user/{user}/delete', 'UserController@delete');
 // 个人设置

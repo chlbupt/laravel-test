@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Http\Response\ResponseJson;
 
 class UserController extends Controller
 {
+    use ResponseJson;
+
     public function index(){
 
         $user = app('App\User');
@@ -63,6 +66,14 @@ class UserController extends Controller
         // TODO: 用户权限验证
         $user->delete();
         return redirect(url('/user'));
+    }
+
+    public function info()
+    {
+        return $this->jsonSuccessData([
+            'id' => 1,
+            'name' => 'wulekong',
+        ]);
     }
 
 }
